@@ -7,10 +7,14 @@ module org.gerenciador_de_sistemas {
     requires jakarta.persistence;
     requires org.hibernate.orm.core;
     requires java.sql;
-    requires static lombok;
 
+
+    requires static lombok;
     opens org.gerenciador_de_sistemas.controller to javafx.fxml;
     opens org.gerenciador_de_sistemas.model;
+
+
+
 
     exports org.gerenciador_de_sistemas;
     exports org.gerenciador_de_sistemas.controller;
