@@ -1,0 +1,14 @@
+package org.gerenciador_de_sistemas.controller;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+
+public class mainController {
+    @FXML
+    private Label welcomeText;
+
+    @FXML
+    protected void onHelloButtonClick() {
+        welcomeText.setText("Welcome to JavaFX Application!");
+    }
+}
