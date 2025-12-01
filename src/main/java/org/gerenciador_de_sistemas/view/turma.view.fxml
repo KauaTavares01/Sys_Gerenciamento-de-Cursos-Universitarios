@@ -1,14 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="500.0" prefWidth="800.0"
+      xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.gerenciador_de_sistemas.controller.TurmaController">
 
-</AnchorPane>
+    <children>
+
+        <!-- MENU -->
+        <MenuBar prefHeight="32.0" prefWidth="800.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="Sistema Acadêmico">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Sobre"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+
+        <!-- FORM + BOTÕES -->
+        <VBox prefHeight="200.0" prefWidth="800.0">
+            <children>
+
+                <!-- FORM -->
+                <GridPane prefHeight="160.0" prefWidth="600.0" hgap="5.0" vgap="5.0">
+                    <columnConstraints>
+                        <ColumnConstraints prefWidth="120.0"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                    </columnConstraints>
+
+                    <children>
+                        <!-- Semestre -->
+                        <Label text="Semestre:" GridPane.rowIndex="0" GridPane.columnIndex="0">
+                            <font>
+                                <Font size="10.0"/>
+                            </font>
+                        </Label>
+                        <TextField fx:id="txtSemestre" promptText="Ex: 2025/1"
+                                   GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+                        <!-- Horário -->
+                        <Label text="Horário:" GridPane.rowIndex="2" GridPane.columnIndex="0">
+                            <font>
+                                <Font size="10.0"/>
+                            </font>
+                        </Label>
+                        <TextField fx:id="txtHorario" promptText="Ex: Seg/Qua 19:00 - 20:40"
+                                   GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+                        <!-- Disciplina -->
+                        <Label text="Disciplina:" GridPane.rowIndex="4" GridPane.columnIndex="0">
+                            <font>
+                                <Font size="10.0"/>
+                            </font>
+                        </Label>
+                        <ComboBox fx:id="cbDisciplina"
+                                  GridPane.rowIndex="5" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+                        <!-- Professor -->
+                        <Label text="Professor:" GridPane.rowIndex="6" GridPane.columnIndex="0">
+                            <font>
+                                <Font size="10.0"/>
+                            </font>
+                        </Label>
+                        <ComboBox fx:id="cbProfessor"
+                                  GridPane.rowIndex="7" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+                    </children>
+                </GridPane>
+
+                <!-- BOTÕES -->
+                <HBox alignment="CENTER" spacing="5.0" prefHeight="60.0" prefWidth="800.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#onNovo"
+                                prefWidth="110.0" style="-fx-background-color: #3385ff;"
+                                text="Novo" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="12.0"/>
+                            </font>
+                        </Button>
+
+                        <Button mnemonicParsing="false" onAction="#onSalvar"
+                                prefWidth="110.0" style="-fx-background-color: #3385ff;"
+                                text="Salvar" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="12.0"/>
+                            </font>
+                        </Button>
+
+                        <Button mnemonicParsing="false" onAction="#onExcluir"
+                                prefWidth="110.0" style="-fx-background-color: #3385ff;"
+                                text="Excluir" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="12.0"/>
+                            </font>
+                        </Button>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" bottom="10.0"/>
+                    </VBox.margin>
+                </HBox>
+
+            </children>
+            <padding>
+                <Insets top="10.0" left="20.0" right="20.0"/>
+            </padding>
+        </VBox>
+
+        <!-- TABELA -->
+        <TableView fx:id="tbTurmas" prefHeight="260.0" prefWidth="800.0"
+                   onMouseClicked="#onTabelaClick">
+            <columns>
+                <TableColumn fx:id="colId" prefWidth="60.0" text="ID"/>
+                <TableColumn fx:id="colSemestre" prefWidth="120.0" text="SEMESTRE"/>
+                <TableColumn fx:id="colDisciplina" prefWidth="220.0" text="DISCIPLINA"/>
+                <TableColumn fx:id="colProfessor" prefWidth="220.0" text="PROFESSOR"/>
+                <TableColumn fx:id="colHorario" prefWidth="180.0" text="HORÁRIO"/>
+            </columns>
+        </TableView>
+
+    </children>
+</VBox>
