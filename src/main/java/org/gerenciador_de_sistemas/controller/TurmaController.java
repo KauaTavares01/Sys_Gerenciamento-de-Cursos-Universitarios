@@ -13,6 +13,7 @@ import org.gerenciador_de_sistemas.dao.TurmaDAO;
 import org.gerenciador_de_sistemas.model.Disciplina;
 import org.gerenciador_de_sistemas.model.Professor;
 import org.gerenciador_de_sistemas.model.Turma;
+import org.gerenciador_de_sistemas.utils.AlertUtils;
 
 import java.net.URL;
 import java.util.List;
@@ -120,22 +121,65 @@ public class TurmaController implements Initializable {
     private void onNovo() {
         prepararNova();
     }
-
     @FXML
     private void onSalvar() {
-        if (turmaAtual == null) {
-            turmaAtual = new Turma();
+        if (!validarFormulario()) return;
+
+        try {
+            turmaAtual.setSemestre(txtSemestre.getText());
+            turmaAtual.setHorario(txtHorario.getText());
+            turmaAtual.setDisciplina(cbDisciplina.getValue());
+            turmaAtual.setProfessor(cbProfessor.getValue());
+
+            turmaDAO.salvarOuAtualizar(turmaAtual);
+            carregarTabela();
+            prepararNova();
+            AlertUtils.info("Sucesso", "Turma salva com sucesso!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            AlertUtils.erro("Erro ao salvar", "Ocorreu um erro ao salvar a turma.");
+        }
+    }
+
+    private boolean validarFormulario() {
+        if (txtSemestre.getText().isBlank()) {
+            AlertUtils.erro("Validação", "O semestre é obrigatório.");
+            return false;
         }
 
-        turmaAtual.setSemestre(txtSemestre.getText());
-        turmaAtual.setHorario(txtHorario.getText());
-        turmaAtual.setDisciplina(cbDisciplina.getValue());
-        turmaAtual.setProfessor(cbProfessor.getValue());
+        if (txtHorario.getText().isBlank()) {
+            AlertUtils.erro("Validação", "O horário é obrigatório.");
+            return false;
+        }
 
-        turmaDAO.salvarOuAtualizar(turmaAtual);
-        carregarTabela();
-        prepararNova();
+        if (cbDisciplina.getValue() == null) {
+            AlertUtils.erro("Validação", "Selecione uma disciplina.");
+            return false;
+        }
+
+        if (cbProfessor.getValue() == null) {
+            AlertUtils.erro("Validação", "Selecione um professor.");
+            return false;
+        }
+
+        return true;
     }
+
+//    @FXML
+//    private void onSalvar() {
+//        if (turmaAtual == null) {
+//            turmaAtual = new Turma();
+//        }
+//
+//        turmaAtual.setSemestre(txtSemestre.getText());
+//        turmaAtual.setHorario(txtHorario.getText());
+//        turmaAtual.setDisciplina(cbDisciplina.getValue());
+//        turmaAtual.setProfessor(cbProfessor.getValue());
+//
+//        turmaDAO.salvarOuAtualizar(turmaAtual);
+//        carregarTabela();
+//        prepararNova();
+//    }
 
     @FXML
     private void onExcluir() {

@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.gerenciador_de_sistemas.dao.CursoDAO;
 import org.gerenciador_de_sistemas.model.Curso;
+import org.gerenciador_de_sistemas.utils.AlertUtils;
 
 
 import java.net.URL;
@@ -79,8 +80,34 @@ public class CursoController implements Initializable {
         prepararNovoCurso();
     }
 
+//    @FXML
+//    private void onSalvar() {
+//        try {
+//            if (cursoAtual == null) {
+//                cursoAtual = new Curso();
+//            }
+//
+//            cursoAtual.setNome(txtNomeCurso.getText());
+//            cursoAtual.setCargaHoraria(Integer.parseInt(txtCargaHoraria.getText()));
+//
+//            cursoDAO.salvarOuAtualizar(cursoAtual);
+//
+//            carregarTabela();
+//            prepararNovoCurso();
+//
+//        } catch (NumberFormatException e) {
+//            System.out.println("Carga horária inválida.");
+//            // aqui depois dá pra trocar por um Alert bonitinho
+//        }
+//    }
+
     @FXML
     private void onSalvar() {
+        // Verifica se o formulário está válido
+        if (!validarFormulario()) {
+            return;
+        }
+
         try {
             if (cursoAtual == null) {
                 cursoAtual = new Curso();
@@ -94,11 +121,13 @@ public class CursoController implements Initializable {
             carregarTabela();
             prepararNovoCurso();
 
+            AlertUtils.info("Sucesso", "Curso salvo com sucesso!");
         } catch (NumberFormatException e) {
-            System.out.println("Carga horária inválida.");
-            // aqui depois dá pra trocar por um Alert bonitinho
+            AlertUtils.erro("Erro", "A carga horária deve ser um número válido.");
         }
     }
+
+
 
     @FXML
     private void onExcluir() {
@@ -126,4 +155,39 @@ public class CursoController implements Initializable {
             );
         }
     }
+
+    private boolean validarFormulario() {
+        String nome = txtNomeCurso.getText();
+        String carga = txtCargaHoraria.getText();
+
+        if (nome == null || nome.isBlank()) {
+            AlertUtils.erro("Validação", "O nome do curso é obrigatório.");
+            txtNomeCurso.requestFocus();
+            return false;
+        }
+
+        if (carga == null || carga.isBlank()) {
+            AlertUtils.erro("Validação", "A carga horária é obrigatória.");
+            txtCargaHoraria.requestFocus();
+            return false;
+        }
+
+        try {
+            int ch = Integer.parseInt(carga);
+            if (ch <= 0) {
+                AlertUtils.erro("Validação", "A carga horária deve ser maior que zero.");
+                txtCargaHoraria.requestFocus();
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            AlertUtils.erro("Validação", "A carga horária deve ser um número inteiro.");
+            txtCargaHoraria.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+
+
 }

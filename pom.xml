@@ -66,6 +66,24 @@
 
 
     <build>
+
+
+        <resources>
+            <!-- Copiar os FXML que estão em src/main/java para o classpath -->
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.fxml</include>
+                </includes>
+            </resource>
+
+            <!-- resources padrão (se você usar no futuro) -->
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

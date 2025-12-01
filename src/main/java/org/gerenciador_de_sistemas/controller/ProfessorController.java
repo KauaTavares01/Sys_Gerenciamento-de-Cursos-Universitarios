@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.gerenciador_de_sistemas.dao.ProfessorDAO;
 import org.gerenciador_de_sistemas.model.Professor;
+import org.gerenciador_de_sistemas.utils.AlertUtils;
 
 import java.net.URL;
 import java.util.List;
@@ -64,14 +65,69 @@ public class ProfessorController implements Initializable {
 
     @FXML
     private void onSalvar() {
-        professorAtual.setNome(txtNome.getText());
-        professorAtual.setEmail(txtEmail.getText());
-        professorAtual.setFormacao(txtFormacao.getText());
+        if (!validarFormulario()) return;
 
-        professorDAO.salvarOuAtualizar(professorAtual);
-        carregarTabela();
-        prepararNovo();
+        try {
+            professorAtual.setNome(txtNome.getText());
+            professorAtual.setEmail(txtEmail.getText());
+            professorAtual.setFormacao(txtFormacao.getText());
+
+            professorDAO.salvarOuAtualizar(professorAtual);
+            carregarTabela();
+            prepararNovo();
+            AlertUtils.info("Sucesso", "Professor salvo com sucesso!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            AlertUtils.erro("Erro ao salvar", "Ocorreu um erro ao salvar o professor.");
+        }
     }
+
+    private boolean validarFormulario() {
+        String nome = txtNome.getText();
+        String email = txtEmail.getText();
+        String formacao = txtFormacao.getText();
+
+        if (nome == null || nome.isBlank()) {
+            AlertUtils.erro("Validação", "O nome do professor é obrigatório.");
+            txtNome.requestFocus();
+            return false;
+        }
+
+        if (email == null || email.isBlank()) {
+            AlertUtils.erro("Validação", "O e-mail é obrigatório.");
+            txtEmail.requestFocus();
+            return false;
+        }
+
+        // Validação simples de formato de e-mail
+        if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            AlertUtils.erro("Validação", "Informe um e-mail válido.");
+            txtEmail.requestFocus();
+            return false;
+        }
+
+        if (formacao == null || formacao.isBlank()) {
+            AlertUtils.erro("Validação", "A formação é obrigatória.");
+            txtFormacao.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+
+
+
+//    @FXML
+//    private void onSalvar() {
+//        professorAtual.setNome(txtNome.getText());
+//        professorAtual.setEmail(txtEmail.getText());
+//        professorAtual.setFormacao(txtFormacao.getText());
+//
+//        professorDAO.salvarOuAtualizar(professorAtual);
+//        carregarTabela();
+//        prepararNovo();
+//    }
 
     @FXML
     private void onExcluir() {

@@ -20,9 +20,11 @@ import org.gerenciador_de_sistemas.model.Curso;
 import org.gerenciador_de_sistemas.model.Disciplina;
 import org.gerenciador_de_sistemas.model.Professor;
 import org.gerenciador_de_sistemas.model.Turma;
+import org.gerenciador_de_sistemas.utils.PatchFXML;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -100,7 +102,16 @@ public class mainController implements Initializable {
 
     private void abrirJanela(String fxml, String titulo) {
         try {
-            FXMLLoader loader = new FXMLLoader(mainApplication.class.getResource(fxml));
+            // Caminho absoluto dentro de resources
+
+           URL fxmlLocation = getClass().getResource("/org/gerenciador_de_sistemas/view/" + fxml);
+
+            if (fxmlLocation == null) {
+                System.out.println("⚠ FXML não encontrado: " + fxml);
+                return;
+            }
+
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
             Parent root = loader.load();
 
             Stage stage = new Stage();
@@ -111,6 +122,8 @@ public class mainController implements Initializable {
             e.printStackTrace();
         }
     }
+
+
 
     @FXML
     private void abrirCursos() {

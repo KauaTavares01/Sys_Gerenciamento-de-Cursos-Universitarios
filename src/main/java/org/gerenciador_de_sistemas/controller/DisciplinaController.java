@@ -12,6 +12,7 @@ import org.gerenciador_de_sistemas.dao.DisciplinaDAO;
 import org.gerenciador_de_sistemas.dao.CursoDAO;
 import org.gerenciador_de_sistemas.model.Disciplina;
 import org.gerenciador_de_sistemas.model.Curso;
+import org.gerenciador_de_sistemas.utils.AlertUtils;
 
 import java.net.URL;
 import java.util.List;
@@ -72,18 +73,42 @@ public class DisciplinaController implements Initializable {
 
     @FXML
     private void onSalvar() {
-        if (disciplinaAtual == null) {
-            disciplinaAtual = new Disciplina();
+        if (!validarFormulario()) return;
+
+        try {
+            if (disciplinaAtual == null) {
+                disciplinaAtual = new Disciplina();
+            }
+
+            disciplinaAtual.setNome(txtNomeDisciplina.getText());
+            disciplinaAtual.setDescricao(txtDescricaoDisciplina.getText());
+            disciplinaAtual.setCurso(cbCurso.getValue());
+
+            disciplinaDAO.salvarOuAtualizar(disciplinaAtual);
+            carregarTabela();
+            prepararNovaDisciplina();
+            AlertUtils.info("Sucesso", "Disciplina salva com sucesso!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            AlertUtils.erro("Erro ao salvar", "Ocorreu um erro ao salvar a disciplina.");
         }
-
-        disciplinaAtual.setNome(txtNomeDisciplina.getText());
-        disciplinaAtual.setDescricao(txtDescricaoDisciplina.getText());
-        disciplinaAtual.setCurso(cbCurso.getValue());
-
-        disciplinaDAO.salvarOuAtualizar(disciplinaAtual);
-        carregarTabela();
-        prepararNovaDisciplina();
     }
+
+
+//    @FXML
+//    private void onSalvar() {
+//        if (disciplinaAtual == null) {
+//            disciplinaAtual = new Disciplina();
+//        }
+//
+//        disciplinaAtual.setNome(txtNomeDisciplina.getText());
+//        disciplinaAtual.setDescricao(txtDescricaoDisciplina.getText());
+//        disciplinaAtual.setCurso(cbCurso.getValue());
+//
+//        disciplinaDAO.salvarOuAtualizar(disciplinaAtual);
+//        carregarTabela();
+//        prepararNovaDisciplina();
+//    }
 
     @FXML
     private void onExcluir() {
@@ -93,4 +118,23 @@ public class DisciplinaController implements Initializable {
             carregarTabela();
         }
     }
+    private boolean validarFormulario() {
+        if (txtNomeDisciplina.getText().isBlank()) {
+            AlertUtils.erro("Validação", "O nome da disciplina é obrigatório.");
+            return false;
+        }
+
+        if (txtDescricaoDisciplina.getText().isBlank()) {
+            AlertUtils.erro("Validação", "A descrição da disciplina é obrigatória.");
+            return false;
+        }
+
+        if (cbCurso.getValue() == null) {
+            AlertUtils.erro("Validação", "Selecione um curso para a disciplina.");
+            return false;
+        }
+
+        return true;
+    }
+
 }
