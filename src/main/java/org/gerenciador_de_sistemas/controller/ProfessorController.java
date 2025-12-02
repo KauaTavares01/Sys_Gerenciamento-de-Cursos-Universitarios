@@ -139,6 +139,23 @@ public class ProfessorController implements Initializable {
     }
 
     @FXML
+    private void onEditar() {
+        Professor selecionado = tbProfessores.getSelectionModel().getSelectedItem();
+
+        if (selecionado != null) {
+            professorAtual = selecionado; // Armazena o professor selecionado
+            txtNome.setText(selecionado.getNome());
+            txtEmail.setText(selecionado.getEmail());
+            txtFormacao.setText(selecionado.getFormacao());
+        } else {
+            AlertUtils.erro("Erro", "Selecione um professor para editar.");
+        }
+    }
+
+
+
+
+    @FXML
     private void onTabelaClick() {
         Professor sel = tbProfessores.getSelectionModel().getSelectedItem();
         if (sel != null) {

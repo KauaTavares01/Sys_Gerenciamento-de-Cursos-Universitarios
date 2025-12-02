@@ -118,6 +118,22 @@ public class DisciplinaController implements Initializable {
             carregarTabela();
         }
     }
+
+    @FXML
+    private void onEditar() {
+        Disciplina selecionada = tbDisciplinas.getSelectionModel().getSelectedItem();
+
+        if (selecionada != null) {
+            disciplinaAtual = selecionada; // Armazena a disciplina selecionada
+            txtNomeDisciplina.setText(selecionada.getNome());
+            txtDescricaoDisciplina.setText(selecionada.getDescricao());
+            cbCurso.getSelectionModel().select(selecionada.getCurso());
+        } else {
+            AlertUtils.erro("Erro", "Selecione uma disciplina para editar.");
+        }
+    }
+
+
     private boolean validarFormulario() {
         if (txtNomeDisciplina.getText().isBlank()) {
             AlertUtils.erro("Validação", "O nome da disciplina é obrigatório.");

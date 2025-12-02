@@ -138,6 +138,22 @@ public class CursoController implements Initializable {
             carregarTabela();
         }
     }
+    @FXML
+    private void onEditar() {
+        Curso selecionado = tbCursos.getSelectionModel().getSelectedItem();
+
+        if (selecionado != null) {
+            cursoAtual = selecionado; // Armazena o curso selecionado
+            txtNomeCurso.setText(selecionado.getNome());
+            txtCargaHoraria.setText(String.valueOf(selecionado.getCargaHoraria()));
+        } else {
+            AlertUtils.erro("Erro", "Selecione um curso para editar.");
+        }
+    }
+
+
+
+
 
     // ------------------------------------------------------
     // (Opcional) Quando clicar na tabela, carregar nos campos

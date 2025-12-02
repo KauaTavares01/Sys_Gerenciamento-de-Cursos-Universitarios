@@ -3,9 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -17,27 +14,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gerenciador_de_sistemas.controller.CursoController">
+<VBox style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gerenciador_de_sistemas.controller.CursoController">
 
     <children>
 
-        <!-- MENU SUPERIOR -->
-        <MenuBar prefHeight="32.0" prefWidth="601.0">
-            <menus>
-                <Menu mnemonicParsing="false" text="Sistema Acadêmico">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Sobre" />
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
-
         <!-- PARTE DE CIMA: FORMULÁRIO + BOTÕES -->
-        <VBox prefHeight="200.0" prefWidth="600.0">
+        <VBox prefHeight="200.0" prefWidth="600.0" style="-fx-background-color: #000000;">
             <children>
 
                 <!-- FORMULÁRIO -->
-                <GridPane hgap="5.0" prefHeight="120.0" prefWidth="400.0" vgap="5.0">
+                <GridPane hgap="5.0" prefHeight="120.0" prefWidth="400.0" style="-fx-background-color: #000000;" vgap="5.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
@@ -50,7 +36,7 @@
 
                     <children>
                         <!-- Nome do curso -->
-                        <Label text="Nome do Curso:">
+                        <Label text="Nome do Curso:" textFill="WHITE">
                             <font>
                                 <Font size="10.0" />
                             </font>
@@ -58,7 +44,7 @@
                         <TextField fx:id="txtNomeCurso" promptText="Digite o nome do curso" GridPane.rowIndex="1" />
 
                         <!-- Carga horária -->
-                        <Label text="Carga Horária:" GridPane.rowIndex="2">
+                        <Label text="Carga Horária:" textFill="WHITE" GridPane.rowIndex="2">
                             <font>
                                 <Font size="10.0" />
                             </font>
@@ -87,6 +73,14 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Button>
+                        <Button onAction="#onEditar" prefWidth="100.0" style="-fx-background-color: #3385ff;" text="Editar" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Button>
+
+
+
                     </children>
                     <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
@@ -100,14 +94,14 @@
         </VBox>
 
         <!-- PARTE DE BAIXO: TABELA DE CURSOS -->
-        <TableView fx:id="tbCursos" prefHeight="222.0" prefWidth="600.0">
+        <TableView fx:id="tbCursos" prefHeight="222.0" prefWidth="600.0" style="-fx-background-color: #000000;">
             <columns>
                 <TableColumn fx:id="colId" prefWidth="60.0" text="ID" />
                 <TableColumn fx:id="colNomeCurso" prefWidth="400.0" text="NOME DO CURSO" />
                 <TableColumn fx:id="colCargaHoraria" prefWidth="200.0" text="CARGA HORÁRIA" />
             </columns>
         </TableView>
-      <Separator prefWidth="200.0" />
+      <Separator prefWidth="200.0" style="-fx-background-color: #c2d6d6;" />
 
     </children>
 </VBox>

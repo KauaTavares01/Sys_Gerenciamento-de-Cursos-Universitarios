@@ -19,5 +19,6 @@ public class mainApplication extends Application {
         stage.setTitle("Sistema de Gerenciamento de Cursos Universitários");
         stage.setScene(scene);
         stage.show();
+
     }
 }

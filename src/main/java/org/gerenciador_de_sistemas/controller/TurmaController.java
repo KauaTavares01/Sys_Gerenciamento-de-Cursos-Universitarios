@@ -191,6 +191,23 @@ public class TurmaController implements Initializable {
     }
 
     @FXML
+    private void onEditar() {
+        Turma selecionada = tbTurmas.getSelectionModel().getSelectedItem();
+
+        if (selecionada != null) {
+            turmaAtual = selecionada; // Armazena a turma selecionada
+            txtSemestre.setText(selecionada.getSemestre());
+            txtHorario.setText(selecionada.getHorario());
+            cbDisciplina.getSelectionModel().select(selecionada.getDisciplina());
+            cbProfessor.getSelectionModel().select(selecionada.getProfessor());
+        } else {
+            AlertUtils.erro("Erro", "Selecione uma turma para editar.");
+        }
+    }
+
+
+
+    @FXML
     private void onTabelaClick() {
         Turma selecionada = tbTurmas.getSelectionModel().getSelectedItem();
         if (selecionada != null) {
